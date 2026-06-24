@@ -43,8 +43,14 @@ export default function Dashboard() {
     enabled: role === 'dono' || role === 'admin',
   });
 
+  const { data: pagamentos, isLoading: loadingPg } = useQuery({
+    queryKey: ['pagamentos-dash', idPetShop],
+    queryFn: () => ((role === 'dono' || role === 'admin') ? base44.entities.Pagamento.filter({ id_pet_shop: idPetShop }, '-created_date', 300) : Promise.resolve([])),
+    enabled: role === 'dono' || role === 'admin',
+  });
+
   const isDono = role === 'dono' || role === 'admin';
-  const isLoading = loadingA || loadingP || (staff && loadingC) || (isDono && loadingPl);
+  const isLoading = loadingA || loadingP || (staff && loadingC) || (isDono && loadingPl) || (isDono && loadingPg);
 
   if (isLoading) return <Spinner label="Carregando dashboard..." />;
 
@@ -54,6 +60,20 @@ export default function Dashboard() {
 
   const pendentes = agList.filter((a) => a.status === 'Pendente').length;
   const concluidos = agList.filter((a) => a.status === 'Concluido').length;
+
+  const pagList = pagamentos || [];
+  const receitaTotal = pagList
+    .filter((p) => p.tipo !== 'Estorno')
+    .reduce((acc, p) => acc + (Number(p.valor) || 0), 0);
+  const totalEstornado = pagList
+    .filter((p) => p.tipo === 'Estorno')
+    .reduce((acc, p) => acc + (Number(p.valor) || 0), 0);
+  const receitaLiquida = receitaTotal - totalEstornado;
+  const porForma = pagList.reduce((acc, p) => {
+    if (p.tipo === 'Estorno') return acc;
+    acc[p.forma_pagamento] = (acc[p.forma_pagamento] || 0) + (Number(p.valor) || 0);
+    return acc;
+  }, {});
 
   return (
     <div className="space-y-6">
@@ -76,6 +96,40 @@ export default function Dashboard() {
           <StatsCard title="Concluídos" value={concluidos} icon={CheckCircle} />
         )}
       </div>
+
+      {isDono && (
+        <div className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm">
+          <h3 className="text-lg font-heading font-semibold text-slate-800 mb-4">Controle Financeiro</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+            <div className="p-4 rounded-xl bg-emerald-50">
+              <p className="text-xs text-emerald-600 font-medium">Receita Líquida</p>
+              <p className="text-2xl font-bold text-emerald-700 mt-1">R$ {receitaLiquida.toFixed(2)}</p>
+            </div>
+            <div className="p-4 rounded-xl bg-[#F8FAFC]">
+              <p className="text-xs text-slate-500 font-medium">Receita Bruta</p>
+              <p className="text-2xl font-bold text-slate-700 mt-1">R$ {receitaTotal.toFixed(2)}</p>
+            </div>
+            <div className="p-4 rounded-xl bg-red-50">
+              <p className="text-xs text-red-500 font-medium">Estornado</p>
+              <p className="text-2xl font-bold text-red-600 mt-1">R$ {totalEstornado.toFixed(2)}</p>
+            </div>
+          </div>
+          {Object.keys(porForma).length > 0 && (
+            <div className="space-y-2">
+              <p className="text-xs text-slate-400 font-medium uppercase tracking-wide">Por forma de pagamento</p>
+              {Object.entries(porForma).map(([forma, valor]) => (
+                <div key={forma} className="flex items-center justify-between p-2.5 rounded-lg bg-[#F8FAFC]">
+                  <span className="text-sm text-slate-600">{forma}</span>
+                  <span className="text-sm font-semibold text-slate-700">R$ {valor.toFixed(2)}</span>
+                </div>
+              ))}
+            </div>
+          )}
+          {pagList.length === 0 && (
+            <p className="text-slate-400 text-sm text-center py-4">Nenhum pagamento registrado ainda</p>
+          )}
+        </div>
+      )}
 
       {isDono && (
         <div className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm">

@@ -29,22 +29,6 @@ function makeEntity(table) {
       if (error) throw error;
       return data;
     },
-    // Busca textual com ilike em um campo + filtros eq opcionais
-    async search(field, term, where = {}, orderBy = '', limit = 20) {
-      let query = supabase.from(table).select('*').ilike(field, `%${term}%`);
-      Object.entries(where).forEach(([key, value]) => {
-        query = query.eq(key, value);
-      });
-      if (orderBy) {
-        const desc = orderBy.startsWith('-');
-        const column = desc ? orderBy.slice(1) : orderBy;
-        query = query.order(column, { ascending: !desc });
-      }
-      if (limit) query = query.limit(limit);
-      const { data, error } = await query;
-      if (error) throw error;
-      return data || [];
-    },
     async create(values) {
       const { data, error } = await supabase.from(table).insert(values).select();
       if (error) {
@@ -156,6 +140,16 @@ export const base44 = {
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
       return data;
+    },
+    async verifyPassword(password) {
+      // Confirma a senha do usuário ATUALMENTE logado (ex.: para autorizar
+      // recebimento em dinheiro no caixa), sem deslogar a sessão existente.
+      const { data: authData } = await supabase.auth.getUser();
+      const email = authData?.user?.email;
+      if (!email) throw new Error('Sessão inválida.');
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) return false;
+      return true;
     },
     async sendPasswordReset(email) {
       const { error } = await supabase.auth.resetPasswordForEmail(email);

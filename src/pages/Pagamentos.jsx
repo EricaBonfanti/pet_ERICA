@@ -27,6 +27,8 @@ export default function Pagamentos() {
   const [showSenha, setShowSenha] = useState(false);
   const [form, setForm] = useState({ valor: '', forma_pagamento: '', tipo: 'Mensalidade', id_pet: '', observacoes: '' });
   const [busca, setBusca] = useState('');
+  const [erroSenha, setErroSenha] = useState('');
+  const [validandoSenha, setValidandoSenha] = useState(false);
 
   const { data: pagamentos, isLoading } = useQuery({
     queryKey: ['pagamentos', idPetShop],
@@ -54,6 +56,18 @@ export default function Pagamentos() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (form.forma_pagamento === 'Dinheiro' && !showSenha) { setShowSenha(true); return; }
+
+    if (form.forma_pagamento === 'Dinheiro' && showSenha) {
+      setErroSenha('');
+      setValidandoSenha(true);
+      const senhaValida = await base44.auth.verifyPassword(senhaDinheiro);
+      setValidandoSenha(false);
+      if (!senhaValida) {
+        setErroSenha('Senha incorreta. Confirme a senha do funcionário para registrar a entrada em dinheiro.');
+        return;
+      }
+    }
+
     const pet = pets?.find((p) => p.id === form.id_pet);
     createMutation.mutate({
       valor: parseFloat(form.valor),
@@ -113,10 +127,13 @@ export default function Pagamentos() {
               <p className="text-sm text-muted-foreground">Pagamento em dinheiro exige senha do funcionário</p>
               <Label>Senha</Label>
               <div className="flex gap-2">
-                <Input type="password" placeholder="Digite sua senha" value={senhaDinheiro} onChange={(e) => setSenhaDinheiro(e.target.value)} />
-                <Button variant="outline" size="icon" onClick={() => setShowSenha(false)}><X className="w-4 h-4" /></Button>
+                <Input type="password" placeholder="Digite sua senha" value={senhaDinheiro} onChange={(e) => { setSenhaDinheiro(e.target.value); setErroSenha(''); }} />
+                <Button variant="outline" size="icon" onClick={() => { setShowSenha(false); setErroSenha(''); setSenhaDinheiro(''); }}><X className="w-4 h-4" /></Button>
               </div>
-              <Button onClick={handleSubmit} className="w-full" disabled={!senhaDinheiro}><Lock className="w-3.5 h-3.5 mr-1" /> Confirmar Pagamento</Button>
+              {erroSenha && <p className="text-xs text-destructive">{erroSenha}</p>}
+              <Button onClick={handleSubmit} className="w-full" disabled={!senhaDinheiro || validandoSenha}>
+                <Lock className="w-3.5 h-3.5 mr-1" /> {validandoSenha ? 'Validando...' : 'Confirmar Pagamento'}
+              </Button>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4 mt-2">
