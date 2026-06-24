@@ -1,0 +1,74 @@
+{
+  "name": "Agendamento",
+  "type": "object",
+  "properties": {
+    "data_hora": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Data e hora do agendamento"
+    },
+    "servico": {
+      "type": "string",
+      "enum": [
+        "Banho",
+        "Tosa",
+        "Hidrata\u00e7\u00e3o",
+        "Corte de unha",
+        "Limpeza de ouvido"
+      ],
+      "description": "Tipo de servi\u00e7o"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Pendente",
+        "Confirmado",
+        "Concluido",
+        "Cancelado"
+      ],
+      "default": "Pendente"
+    },
+    "id_cliente": {
+      "type": "string",
+      "description": "ID do cliente (User)"
+    },
+    "id_pet": {
+      "type": "string",
+      "description": "ID do pet"
+    },
+    "nome_pet": {
+      "type": "string",
+      "description": "Nome do pet"
+    },
+    "nome_cliente": {
+      "type": "string",
+      "description": "Nome do cliente"
+    },
+    "observacoes": {
+      "type": "string"
+    },
+    "valor": {
+      "type": "number",
+      "description": "Valor do servi\u00e7o"
+    },
+    "tipo_cobranca": {
+      "type": "string",
+      "enum": [
+        "coberto_pelo_plano",
+        "avulso"
+      ],
+      "default": "avulso",
+      "description": "Se o servi\u00e7o \u00e9 coberto pelo plano ou cobrado avulso"
+    },
+    "id_pet_shop": {
+      "type": "string",
+      "description": "ID do Pet Shop"
+    }
+  },
+  "required": [
+    "data_hora",
+    "servico",
+    "id_cliente",
+    "id_pet"
+  ]
+}

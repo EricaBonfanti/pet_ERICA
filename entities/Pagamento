@@ -1,0 +1,63 @@
+{
+  "name": "Pagamento",
+  "type": "object",
+  "properties": {
+    "valor": {
+      "type": "number"
+    },
+    "forma_pagamento": {
+      "type": "string",
+      "enum": [
+        "PIX",
+        "Cartao",
+        "Dinheiro"
+      ]
+    },
+    "tipo": {
+      "type": "string",
+      "enum": [
+        "Mensalidade",
+        "ServicoAvulso",
+        "Estorno",
+        "Ajuste"
+      ]
+    },
+    "id_cliente": {
+      "type": "string"
+    },
+    "nome_cliente": {
+      "type": "string"
+    },
+    "id_pet": {
+      "type": "string"
+    },
+    "nome_pet": {
+      "type": "string"
+    },
+    "id_plano": {
+      "type": "string"
+    },
+    "id_funcionario": {
+      "type": "string"
+    },
+    "nome_funcionario": {
+      "type": "string"
+    },
+    "confirmado": {
+      "type": "boolean",
+      "default": true
+    },
+    "observacoes": {
+      "type": "string"
+    },
+    "id_pet_shop": {
+      "type": "string",
+      "description": "ID do Pet Shop"
+    }
+  },
+  "required": [
+    "valor",
+    "forma_pagamento",
+    "id_cliente"
+  ]
+}

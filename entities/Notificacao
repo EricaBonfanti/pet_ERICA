@@ -1,0 +1,39 @@
+{
+  "name": "Notificacao",
+  "type": "object",
+  "properties": {
+    "id_usuario": {
+      "type": "string"
+    },
+    "titulo": {
+      "type": "string"
+    },
+    "mensagem": {
+      "type": "string"
+    },
+    "tipo": {
+      "type": "string",
+      "enum": [
+        "VacinaVencida",
+        "VacinaAVencer",
+        "Pagamento",
+        "Agendamento",
+        "Geral"
+      ]
+    },
+    "lida": {
+      "type": "boolean",
+      "default": false
+    },
+    "id_pet_shop": {
+      "type": "string",
+      "description": "ID do Pet Shop"
+    }
+  },
+  "required": [
+    "id_usuario",
+    "titulo",
+    "mensagem",
+    "tipo"
+  ]
+}

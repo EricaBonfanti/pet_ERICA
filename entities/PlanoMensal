@@ -1,0 +1,55 @@
+{
+  "name": "PlanoMensal",
+  "type": "object",
+  "properties": {
+    "nome": {
+      "type": "string"
+    },
+    "descricao": {
+      "type": "string"
+    },
+    "valor_mensal": {
+      "type": "number"
+    },
+    "id_pet": {
+      "type": "string"
+    },
+    "nome_pet": {
+      "type": "string"
+    },
+    "id_tutor": {
+      "type": "string"
+    },
+    "nome_tutor": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Ativo",
+        "Inadimplente",
+        "Inativo",
+        "Cancelado"
+      ],
+      "default": "Ativo"
+    },
+    "data_inicio": {
+      "type": "string",
+      "format": "date"
+    },
+    "data_vencimento": {
+      "type": "string",
+      "format": "date"
+    },
+    "id_pet_shop": {
+      "type": "string",
+      "description": "ID do Pet Shop"
+    }
+  },
+  "required": [
+    "nome",
+    "valor_mensal",
+    "id_pet",
+    "id_tutor"
+  ]
+}

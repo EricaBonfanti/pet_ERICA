@@ -1,0 +1,22 @@
+{
+  "name": "PetShop",
+  "type": "object",
+  "properties": {
+    "nome": {
+      "type": "string",
+      "description": "Nome do estabelecimento"
+    },
+    "slug": {
+      "type": "string",
+      "description": "Identificador \u00fanico para link de convite (URL-safe)"
+    },
+    "endereco": {
+      "type": "string",
+      "description": "Endere\u00e7o do pet shop"
+    }
+  },
+  "required": [
+    "nome",
+    "slug"
+  ]
+}

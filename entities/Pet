@@ -1,0 +1,59 @@
+{
+  "name": "Pet",
+  "type": "object",
+  "properties": {
+    "nome_pet": {
+      "type": "string",
+      "description": "Nome do pet"
+    },
+    "especie": {
+      "type": "string",
+      "enum": [
+        "Cão",
+        "Gato",
+        "Outro"
+      ],
+      "description": "Espécie do pet"
+    },
+    "raca": {
+      "type": "string",
+      "description": "Raça do pet"
+    },
+    "porte": {
+      "type": "string",
+      "enum": [
+        "Pequeno",
+        "Medio",
+        "Grande"
+      ],
+      "description": "Porte do pet"
+    },
+    "idade": {
+      "type": "number",
+      "description": "Idade do pet em anos"
+    },
+    "id_tutor": {
+      "type": "string",
+      "description": "ID do tutor (User) dono do pet"
+    },
+    "foto_url": {
+      "type": "string",
+      "description": "URL da foto do pet"
+    },
+    "observacoes": {
+      "type": "string",
+      "description": "Observações sobre o pet"
+    },
+    "id_pet_shop": {
+      "type": "string",
+      "description": "ID do Pet Shop"
+    }
+  },
+  "required": [
+    "nome_pet",
+    "especie",
+    "raca",
+    "porte",
+    "id_tutor"
+  ]
+}

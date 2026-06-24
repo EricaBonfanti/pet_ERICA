@@ -1,0 +1,37 @@
+{
+  "name": "AuditLog",
+  "type": "object",
+  "properties": {
+    "acao": {
+      "type": "string",
+      "description": "Tipo da a\u00e7\u00e3o (criar, atualizar, deletar)"
+    },
+    "entidade": {
+      "type": "string"
+    },
+    "entidade_id": {
+      "type": "string"
+    },
+    "usuario_id": {
+      "type": "string"
+    },
+    "usuario_nome": {
+      "type": "string"
+    },
+    "detalhes": {
+      "type": "string"
+    },
+    "ip_address": {
+      "type": "string"
+    },
+    "id_pet_shop": {
+      "type": "string",
+      "description": "ID do Pet Shop"
+    }
+  },
+  "required": [
+    "acao",
+    "entidade",
+    "usuario_id"
+  ]
+}

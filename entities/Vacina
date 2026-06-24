@@ -1,0 +1,54 @@
+{
+  "name": "Vacina",
+  "type": "object",
+  "properties": {
+    "nome_vacina": {
+      "type": "string"
+    },
+    "id_pet": {
+      "type": "string"
+    },
+    "nome_pet": {
+      "type": "string"
+    },
+    "id_tutor": {
+      "type": "string"
+    },
+    "nome_tutor": {
+      "type": "string"
+    },
+    "cpf_tutor": {
+      "type": "string"
+    },
+    "data_aplicacao": {
+      "type": "string",
+      "format": "date"
+    },
+    "data_validade": {
+      "type": "string",
+      "format": "date"
+    },
+    "lote": {
+      "type": "string"
+    },
+    "veterinario": {
+      "type": "string"
+    },
+    "confirmado": {
+      "type": "boolean",
+      "default": true
+    },
+    "observacoes": {
+      "type": "string"
+    },
+    "id_pet_shop": {
+      "type": "string",
+      "description": "ID do Pet Shop"
+    }
+  },
+  "required": [
+    "nome_vacina",
+    "id_pet",
+    "data_aplicacao"
+  ]
+}

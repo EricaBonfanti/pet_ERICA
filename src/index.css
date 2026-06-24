@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 210 30% 20%;
+    --card: 0 0% 100%;
+    --card-foreground: 210 30% 20%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 30% 20%;
+    --primary: 208 60% 45%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 208 55% 92%;
+    --secondary-foreground: 208 50% 30%;
+    --muted: 210 45% 96%;
+    --muted-foreground: 210 15% 50%;
+    --accent: 208 50% 55%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 60% 55%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 210 25% 90%;
+    --input: 210 25% 90%;
+    --ring: 208 60% 45%;
+    --chart-1: 208 60% 45%;
+    --chart-2: 208 45% 60%;
+    --chart-3: 208 35% 50%;
+    --chart-4: 208 55% 65%;
+    --chart-5: 200 50% 55%;
+    --radius: 0.75rem;
+    --font-heading: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-body: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --sidebar-background: 210 40% 98%;
+    --sidebar-foreground: 210 30% 20%;
+    --sidebar-primary: 208 60% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 208 55% 92%;
+    --sidebar-accent-foreground: 208 50% 30%;
+    --sidebar-border: 210 25% 90%;
+    --sidebar-ring: 208 60% 45%;
+  }
+
+
+}
+
+
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+  }
+}
