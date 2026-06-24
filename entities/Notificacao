@@ -21,6 +21,10 @@
         "Geral"
       ]
     },
+    "referencia_id": {
+      "type": "string",
+      "description": "ID do registro de origem (ex: Vacina), para evitar notificações duplicadas"
+    },
     "lida": {
       "type": "boolean",
       "default": false

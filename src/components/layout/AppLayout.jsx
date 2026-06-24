@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/supabaseClient';
 import Sidebar from './Sidebar';
 import NotificationBell from '@/components/ui/NotificationBell';
+import { checarVacinasEGerarNotificacoes } from '@/lib/vacinaNotificacoes';
 
 export default function AppLayout({ user }) {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -15,6 +16,16 @@ export default function AppLayout({ user }) {
     queryFn: () => (idPetShop ? base44.entities.PetShop.get(idPetShop) : Promise.resolve(null)),
     enabled: !!idPetShop,
   });
+
+  // Verifica vacinas vencidas/a vencer (até 30 dias) e gera notificações,
+  // uma vez por sessão do navegador (evita repetir a cada navegação de página).
+  useEffect(() => {
+    if (!idPetShop) return;
+    const jaChecouNestaSessao = sessionStorage.getItem('petlify_checou_vacinas');
+    if (jaChecouNestaSessao) return;
+    sessionStorage.setItem('petlify_checou_vacinas', '1');
+    checarVacinasEGerarNotificacoes(idPetShop);
+  }, [idPetShop]);
 
   // Auto-vincular funcionario ao Pet Shop do Dono que o convidou
   useEffect(() => {
